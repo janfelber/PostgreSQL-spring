@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
-@Table(name = "comments", schema = "app")
+@Table(name = "comments", schema = "App")
 public class Comments {
 
     @Id

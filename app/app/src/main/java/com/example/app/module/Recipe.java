@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "recipe", schema = "app")
+@Table(name = "recipe", schema = "App")
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

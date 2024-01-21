@@ -23,3 +23,5 @@ public class FavoritesController {
         return favoritesService.getFavorite(id);
     }
 }
+
+
