@@ -19,11 +19,31 @@ public class Recipe {
     @Size(min = 3, max = 50)
     @Column(name = "title")
     private String title;
-    @Column(name = "user_id_user")
-    private int userId;
 
-    @Column(name = "category_id_category")
-    private int categoryId;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "category_id_category", referencedColumnName = "id_category")
+    private Category category;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "user_id_user", referencedColumnName = "id_user")
+    private User user;
 
     @NotEmpty
     @Size(min = 3, max = 50)
@@ -50,22 +70,6 @@ public class Recipe {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
     }
 
     public String getDescription() {

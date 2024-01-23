@@ -1,7 +1,11 @@
 package com.example.app.service;
 
+import com.example.app.module.Category;
 import com.example.app.module.Recipe;
+import com.example.app.module.User;
+import com.example.app.repository.CategoryRepository;
 import com.example.app.repository.RecipeRepository;
+import com.example.app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,9 +18,16 @@ public class RecipeServiceImpl implements RecipeService{
 
     private final RecipeRepository recipeRepository;
 
+    private final UserRepository userRepository;
+
+    private final CategoryRepository categoryRepository;
+
     @Autowired
-    public RecipeServiceImpl(RecipeRepository pastryRepository) {
+    public RecipeServiceImpl(RecipeRepository pastryRepository, UserRepository userRepository,
+                             CategoryRepository categoryRepository){
         this.recipeRepository = pastryRepository;
+        this.userRepository = userRepository;
+        this.categoryRepository = categoryRepository;
     }
 
 
@@ -29,11 +40,20 @@ public class RecipeServiceImpl implements RecipeService{
     @Override
     public Recipe addRecipe(Recipe recipe) {
         var dbRecipe = recipeRepository.findById(recipe.getId());
-        if (dbRecipe.isEmpty()) {
+        User user = userRepository.findById(1).orElse(null);
+        Category category = categoryRepository.findById(1).orElse(null);
+        if (user != null) { // Check if the user is found
+            if (dbRecipe.isEmpty()) {
+                recipe.setUser(user);
+                recipe.setCategory(category);
+                return recipeRepository.save(recipe);
+            }
+            recipe.setIngredients(dbRecipe.get().getIngredients());
             return recipeRepository.save(recipe);
+        } else {
+            // Handle the case where the user with ID 1 is not found
+            return null;
         }
-        recipe.setIngredients(dbRecipe.get().getIngredients());
-        return recipeRepository.save(recipe);
     }
 
     @Override
