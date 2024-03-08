@@ -38,10 +38,10 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
-    public Recipe addRecipe(Recipe recipe) {
+    public Recipe addRecipe(Recipe recipe, int categoryId) {
         var dbRecipe = recipeRepository.findById(recipe.getId());
         User user = userRepository.findById(1).orElse(null);
-        Category category = categoryRepository.findById(1).orElse(null);
+        Category category = categoryRepository.findById(categoryId).orElse(null);
         if (user != null) { // Check if the user is found
             if (dbRecipe.isEmpty()) {
                 recipe.setUser(user);

@@ -9,6 +9,6 @@ public interface RecipeService {
 
     List<Recipe> getAllRecipes();
 
-    Recipe addRecipe(Recipe recipe);
+    Recipe addRecipe(Recipe recipe, int categoryId);
     Recipe getRecipe(int id);
 }
